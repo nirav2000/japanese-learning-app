@@ -571,18 +571,17 @@ class SpacedRepetitionApp {
         const currentLangData = languageData[this.currentLanguage];
 
         // Different layouts based on language and mode
-        if (this.currentLanguage === 'japanese' && this.currentMode === 'characters') {
-            // Show both hiragana and katakana charts for Japanese
-            const hiraganaSection = document.createElement('div');
-            hiraganaSection.innerHTML = '<h3 style="color: #667eea; margin: 20px 0;">Hiragana</h3>';
-            chartGrid.appendChild(hiraganaSection);
-            this.renderKanaChart(chartGrid, 'hiragana');
-
-            const katakanaSection = document.createElement('div');
-            katakanaSection.innerHTML = '<h3 style="color: #667eea; margin: 40px 0 20px 0;">Katakana</h3>';
-            chartGrid.appendChild(katakanaSection);
-            this.renderKanaChart(chartGrid, 'katakana');
+        if (this.currentLanguage === 'japanese' && (this.currentMode === 'hiragana' || this.currentMode === 'katakana')) {
+            // Show kana chart for hiragana or katakana
+            this.renderKanaChart(chartGrid, this.currentMode);
+        } else if (this.currentLanguage === 'french' && this.currentMode === 'alphabet') {
+            // Show French alphabet chart
+            this.renderFrenchAlphabetChart(chartGrid);
+        } else if (this.currentLanguage === 'gujarati' && (this.currentMode === 'vowels' || this.currentMode === 'consonants')) {
+            // Show Gujarati vowels or consonants chart
+            this.renderGujaratiChart(chartGrid, this.currentMode);
         } else {
+            // For all other modes, use list chart
             this.renderListChart(chartGrid);
         }
 
@@ -665,8 +664,155 @@ class SpacedRepetitionApp {
         });
     }
 
+    renderFrenchAlphabetChart(container) {
+        const currentLangData = languageData[this.currentLanguage];
+        const alphabetData = currentLangData.alphabet || [];
+
+        // Create a grid layout for French alphabet
+        // Split into basic letters and accented characters
+        const basicLetters = alphabetData.filter(item => item.char.length === 1 && item.char.match(/[a-z]/i));
+        const accentedChars = alphabetData.filter(item => !item.char.match(/^[a-z]$/i));
+
+        // Basic alphabet section
+        if (basicLetters.length > 0) {
+            const basicSection = document.createElement('div');
+            basicSection.innerHTML = '<h3 style="color: #667eea; margin: 20px 0;">Basic Alphabet</h3>';
+            container.appendChild(basicSection);
+
+            const gridContainer = document.createElement('div');
+            gridContainer.style.display = 'grid';
+            gridContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(80px, 1fr))';
+            gridContainer.style.gap = '15px';
+            gridContainer.style.marginBottom = '30px';
+
+            basicLetters.forEach(item => {
+                const cell = document.createElement('div');
+                cell.className = 'chart-cell';
+                cell.style.textAlign = 'center';
+                cell.style.padding = '15px';
+                cell.style.background = 'white';
+                cell.style.borderRadius = '10px';
+                cell.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+
+                const charDiv = document.createElement('div');
+                charDiv.className = 'chart-character';
+                charDiv.style.fontSize = '2em';
+                charDiv.style.fontWeight = 'bold';
+                charDiv.style.color = '#667eea';
+                charDiv.textContent = item.char.toUpperCase() + ' ' + item.char.toLowerCase();
+
+                const romajiDiv = document.createElement('div');
+                romajiDiv.className = 'chart-romaji';
+                romajiDiv.style.fontSize = '0.9em';
+                romajiDiv.style.color = '#888';
+                romajiDiv.style.marginTop = '5px';
+                romajiDiv.textContent = item.romaji;
+
+                cell.appendChild(charDiv);
+                cell.appendChild(romajiDiv);
+                gridContainer.appendChild(cell);
+            });
+
+            container.appendChild(gridContainer);
+        }
+
+        // Accented characters section
+        if (accentedChars.length > 0) {
+            const accentSection = document.createElement('div');
+            accentSection.innerHTML = '<h3 style="color: #667eea; margin: 20px 0;">Accented Characters</h3>';
+            container.appendChild(accentSection);
+
+            const gridContainer = document.createElement('div');
+            gridContainer.style.display = 'grid';
+            gridContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(80px, 1fr))';
+            gridContainer.style.gap = '15px';
+
+            accentedChars.forEach(item => {
+                const cell = document.createElement('div');
+                cell.className = 'chart-cell';
+                cell.style.textAlign = 'center';
+                cell.style.padding = '15px';
+                cell.style.background = 'white';
+                cell.style.borderRadius = '10px';
+                cell.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+
+                const charDiv = document.createElement('div');
+                charDiv.className = 'chart-character';
+                charDiv.style.fontSize = '2em';
+                charDiv.style.fontWeight = 'bold';
+                charDiv.style.color = '#667eea';
+                charDiv.textContent = item.char;
+
+                const romajiDiv = document.createElement('div');
+                romajiDiv.className = 'chart-romaji';
+                romajiDiv.style.fontSize = '0.9em';
+                romajiDiv.style.color = '#888';
+                romajiDiv.style.marginTop = '5px';
+                romajiDiv.textContent = item.romaji;
+
+                cell.appendChild(charDiv);
+                cell.appendChild(romajiDiv);
+                gridContainer.appendChild(cell);
+            });
+
+            container.appendChild(gridContainer);
+        }
+    }
+
+    renderGujaratiChart(container, mode) {
+        const currentLangData = languageData[this.currentLanguage];
+        const chartData = currentLangData[mode] || [];
+
+        // Create a grid layout for Gujarati vowels or consonants
+        const gridContainer = document.createElement('div');
+        gridContainer.style.display = 'grid';
+        gridContainer.style.gridTemplateColumns = mode === 'vowels'
+            ? 'repeat(auto-fill, minmax(100px, 1fr))'
+            : 'repeat(auto-fill, minmax(90px, 1fr))';
+        gridContainer.style.gap = '15px';
+        gridContainer.style.marginBottom = '20px';
+
+        chartData.forEach(item => {
+            const cell = document.createElement('div');
+            cell.className = 'chart-cell';
+            cell.style.textAlign = 'center';
+            cell.style.padding = '15px';
+            cell.style.background = 'white';
+            cell.style.borderRadius = '10px';
+            cell.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+
+            const charDiv = document.createElement('div');
+            charDiv.className = 'chart-character';
+            charDiv.style.fontSize = '2.5em';
+            charDiv.style.fontWeight = 'bold';
+            charDiv.style.color = '#667eea';
+            charDiv.textContent = item.char;
+
+            const romajiDiv = document.createElement('div');
+            romajiDiv.className = 'chart-romaji';
+            romajiDiv.style.fontSize = '0.9em';
+            romajiDiv.style.color = '#888';
+            romajiDiv.style.marginTop = '8px';
+            romajiDiv.textContent = item.romaji;
+
+            const meaningDiv = document.createElement('div');
+            meaningDiv.style.fontSize = '0.75em';
+            meaningDiv.style.color = '#aaa';
+            meaningDiv.style.marginTop = '4px';
+            meaningDiv.textContent = item.meaning;
+
+            cell.appendChild(charDiv);
+            cell.appendChild(romajiDiv);
+            cell.appendChild(meaningDiv);
+            gridContainer.appendChild(cell);
+        });
+
+        container.appendChild(gridContainer);
+    }
+
     renderListChart(container) {
-        const chartData = japaneseData[this.currentMode] || [];
+        const currentLangData = languageData[this.currentLanguage];
+        const chartData = currentLangData[this.currentMode] || [];
 
         chartData.forEach(item => {
             const chartItem = document.createElement('div');
