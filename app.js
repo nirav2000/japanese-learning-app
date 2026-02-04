@@ -92,19 +92,36 @@ class SpacedRepetitionApp {
 
         // Update stats display
         this.updateStats();
+
+        // Update status indicator to show JS is loaded
+        const jsStatus = document.getElementById('jsStatus');
+        if (jsStatus) {
+            jsStatus.textContent = 'v2.0 - Ready ✓';
+            jsStatus.style.color = '#4CAF50';
+        }
     }
 
     updateModeButtons() {
+        console.log('[updateModeButtons] Starting...');
         const modeSelector = document.getElementById('modeSelector');
-        if (!modeSelector) return;
+        if (!modeSelector) {
+            console.error('[updateModeButtons] modeSelector element not found!');
+            return;
+        }
 
         // Clear existing buttons
         modeSelector.innerHTML = '';
 
         // Get modes for current language
+        console.log('[updateModeButtons] Current language:', this.currentLanguage);
+        console.log('[updateModeButtons] languageConfig:', typeof languageConfig);
         const config = languageConfig[this.currentLanguage];
-        if (!config || !config.modes) return;
+        if (!config || !config.modes) {
+            console.error('[updateModeButtons] Config or modes not found!', config);
+            return;
+        }
 
+        console.log('[updateModeButtons] Creating buttons for modes:', config.modes);
         // Create buttons for each mode
         config.modes.forEach(mode => {
             const btn = document.createElement('button');
@@ -118,6 +135,7 @@ class SpacedRepetitionApp {
 
             modeSelector.appendChild(btn);
         });
+        console.log('[updateModeButtons] Created', config.modes.length, 'mode buttons');
 
         // Update category dropdown for categories
         this.updateCategoryDropdown();
