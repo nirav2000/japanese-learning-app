@@ -347,7 +347,7 @@ class SpacedRepetitionApp {
         if (cards.length === 0) {
             for (let i = 0; i < Math.min(10, this.currentData.length); i++) {
                 const item = this.currentData[i];
-                const cardId = `${this.currentMode}-${i}`;
+                const cardId = `${this.currentLanguage}-${this.currentMode}-${i}`;
                 if (!this.progress[cardId]) {
                     cards.push({
                         ...item,
