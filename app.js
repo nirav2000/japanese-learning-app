@@ -866,17 +866,18 @@ class SpacedRepetitionApp {
 
         // Create mode stats dynamically based on current language
         const modeStats = {};
-        if (this.currentLanguage === 'japanese') {
-            modeStats.characters = {
-                learned: 0,
-                total: currentLangData.hiragana.length + currentLangData.katakana.length + currentLangData.kanji.length
-            };
-            modeStats.words = { learned: 0, total: currentLangData.words.length };
-            modeStats.sentences = { learned: 0, total: currentLangData.sentences.length };
-        } else {
-            modeStats.characters = { learned: 0, total: currentLangData.characters.length };
-            modeStats.words = { learned: 0, total: currentLangData.words.length };
-            modeStats.sentences = { learned: 0, total: currentLangData.sentences.length };
+        const config = languageConfig[this.currentLanguage];
+
+        // Initialize stats for all modes in current language
+        if (config && config.modes) {
+            config.modes.forEach(mode => {
+                if (currentLangData[mode]) {
+                    modeStats[mode] = {
+                        learned: 0,
+                        total: currentLangData[mode].length
+                    };
+                }
+            });
         }
 
         const upcomingCards = [];
@@ -904,52 +905,25 @@ class SpacedRepetitionApp {
 
             // Cards due soon
             if (card.nextReview && card.nextReview <= now + 24 * 60 * 60 * 1000) {
-                let modeData = null;
-                if (this.currentLanguage === 'japanese' && mode === 'characters') {
-                    // For Japanese characters mode, need to find in combined data
-                    const allChars = [...currentLangData.hiragana, ...currentLangData.katakana, ...currentLangData.kanji];
-                    modeData = allChars[parseInt(index)];
-                    if (modeData) {
-                        upcomingCards.push({
-                            ...modeData,
-                            mode,
-                            nextReview: card.nextReview
-                        });
-                    }
-                } else {
-                    modeData = currentLangData[mode];
-                    if (modeData && modeData[parseInt(index)]) {
-                        upcomingCards.push({
-                            ...modeData[parseInt(index)],
-                            mode,
-                            nextReview: card.nextReview
-                        });
-                    }
+                const modeData = currentLangData[mode];
+                if (modeData && modeData[parseInt(index)]) {
+                    upcomingCards.push({
+                        ...modeData[parseInt(index)],
+                        mode,
+                        nextReview: card.nextReview
+                    });
                 }
             }
 
             // Cards with mistakes (low repetitions or short intervals)
             if (card.repetitions < 3 && card.lastReview) {
-                let modeData = null;
-                if (this.currentLanguage === 'japanese' && mode === 'characters') {
-                    const allChars = [...currentLangData.hiragana, ...currentLangData.katakana, ...currentLangData.kanji];
-                    modeData = allChars[parseInt(index)];
-                    if (modeData) {
-                        mistakeCards.push({
-                            ...modeData,
-                            mode,
-                            mistakes: card.mistakes || 0
-                        });
-                    }
-                } else {
-                    modeData = currentLangData[mode];
-                    if (modeData && modeData[parseInt(index)]) {
-                        mistakeCards.push({
-                            ...modeData[parseInt(index)],
-                            mode,
-                            mistakes: card.mistakes || 0
-                        });
-                    }
+                const modeData = currentLangData[mode];
+                if (modeData && modeData[parseInt(index)]) {
+                    mistakeCards.push({
+                        ...modeData[parseInt(index)],
+                        mode,
+                        mistakes: card.mistakes || 0
+                    });
                 }
             }
         });
