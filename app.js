@@ -1050,5 +1050,31 @@ class SpacedRepetitionApp {
 
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.app = new SpacedRepetitionApp();
+    const jsStatus = document.getElementById('jsStatus');
+    try {
+        // Check if required data is available
+        if (typeof languageConfig === 'undefined') {
+            throw new Error('languageConfig is not defined');
+        }
+        if (typeof languageData === 'undefined') {
+            throw new Error('languageData is not defined');
+        }
+        if (typeof japaneseData === 'undefined') {
+            throw new Error('japaneseData is not defined');
+        }
+        if (typeof frenchData === 'undefined') {
+            throw new Error('frenchData is not defined');
+        }
+        if (typeof gujaratiData === 'undefined') {
+            throw new Error('gujaratiData is not defined');
+        }
+
+        window.app = new SpacedRepetitionApp();
+    } catch (error) {
+        console.error('Failed to initialize app:', error);
+        if (jsStatus) {
+            jsStatus.textContent = 'Error: ' + error.message;
+            jsStatus.style.color = '#f44336';
+        }
+    }
 });
