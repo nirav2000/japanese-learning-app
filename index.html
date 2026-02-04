@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Learning - Spaced Repetition</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Japanese Learning App</h1>
+            <p class="subtitle">Master Hiragana, Katakana & Kanji with Spaced Repetition</p>
+        </header>
+
+        <div class="mode-selector" id="modeSelector">
+            <button class="mode-btn" data-mode="hiragana">Hiragana</button>
+            <button class="mode-btn" data-mode="katakana">Katakana</button>
+            <button class="mode-btn" data-mode="kanji">Kanji</button>
+            <button class="mode-btn" data-mode="words">Words</button>
+            <button class="mode-btn" data-mode="sentences">Sentences</button>
+        </div>
+
+        <div class="stats-panel">
+            <div class="stat-item">
+                <span class="stat-label">Learned:</span>
+                <span class="stat-value" id="learnedCount">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Review Today:</span>
+                <span class="stat-value" id="reviewCount">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Streak:</span>
+                <span class="stat-value" id="streakCount">0</span>
+            </div>
+        </div>
+
+        <div class="learning-area" id="learningArea" style="display: none;">
+            <div class="card">
+                <div class="character-display" id="characterDisplay"></div>
+                <div class="hint" id="hint" style="display: none;"></div>
+                <button class="show-answer-btn" id="showAnswerBtn">Show Answer</button>
+
+                <div class="answer-section" id="answerSection" style="display: none;">
+                    <div class="romaji" id="romaji"></div>
+                    <div class="meaning" id="meaning"></div>
+                    <div class="example" id="example"></div>
+
+                    <div class="rating-buttons">
+                        <button class="rating-btn hard" data-rating="1">Hard</button>
+                        <button class="rating-btn good" data-rating="3">Good</button>
+                        <button class="rating-btn easy" data-rating="5">Easy</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="progress-text" id="progressText">0 / 0</p>
+        </div>
+
+        <div class="welcome-screen" id="welcomeScreen">
+            <h2>Welcome to Japanese Learning!</h2>
+            <p>Select a learning mode above to begin your journey.</p>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h3>Spaced Repetition</h3>
+                    <p>Learn efficiently with scientifically proven spaced repetition algorithm</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Frequency-Based</h3>
+                    <p>Start with the most common characters and progress naturally</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Progressive Learning</h3>
+                    <p>From characters to words to sentences - build your skills step by step</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="completion-screen" id="completionScreen" style="display: none;">
+            <h2>Session Complete!</h2>
+            <p id="completionMessage"></p>
+            <button class="restart-btn" id="restartBtn">Start New Session</button>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
