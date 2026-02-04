@@ -267,6 +267,13 @@ class SpacedRepetitionApp {
         if (config) {
             document.getElementById('appTitle').textContent = config.title;
             document.getElementById('appSubtitle').textContent = config.subtitle;
+
+            // Update welcome screen title
+            const languageName = this.currentLanguage.charAt(0).toUpperCase() + this.currentLanguage.slice(1);
+            const welcomeTitle = document.getElementById('welcomeTitle');
+            if (welcomeTitle) {
+                welcomeTitle.textContent = `Welcome to ${languageName} Learning!`;
+            }
         }
     }
 
