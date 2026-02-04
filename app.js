@@ -10,6 +10,13 @@ class SpacedRepetitionApp {
         this.currentCard = null;
         this.currentIndex = 0;
         this.sessionCards = [];
+        this.reviewMode = false;
+
+        // Touch/swipe handling
+        this.touchStartX = 0;
+        this.touchStartY = 0;
+        this.touchEndX = 0;
+        this.touchEndY = 0;
 
         // Local storage key base
         this.STORAGE_KEY_BASE = 'multiLangLearningSRS';
@@ -40,6 +47,18 @@ class SpacedRepetitionApp {
         if (categoryDropdown) {
             categoryDropdown.addEventListener('change', (e) => {
                 this.handleCategoryChange(e.target.value);
+            });
+        }
+
+        // Review mode checkbox
+        const reviewModeCheckbox = document.getElementById('reviewModeCheckbox');
+        if (reviewModeCheckbox) {
+            reviewModeCheckbox.addEventListener('change', (e) => {
+                this.reviewMode = e.target.checked;
+                if (this.currentMode) {
+                    // Restart current session with new mode
+                    this.selectMode(this.currentMode);
+                }
             });
         }
 
@@ -87,6 +106,9 @@ class SpacedRepetitionApp {
             this.closeProgressScreen();
         });
 
+        // Setup swipe gestures on learning area
+        this.setupSwipeGestures();
+
         // Update UI for current language
         this.updateLanguageUI();
 
@@ -98,6 +120,56 @@ class SpacedRepetitionApp {
         if (jsStatus) {
             jsStatus.textContent = 'v2.0 - Ready ✓';
             jsStatus.style.color = '#4CAF50';
+        }
+    }
+
+    setupSwipeGestures() {
+        const learningArea = document.getElementById('learningArea');
+        if (!learningArea) return;
+
+        learningArea.addEventListener('touchstart', (e) => {
+            this.touchStartX = e.changedTouches[0].screenX;
+            this.touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        learningArea.addEventListener('touchend', (e) => {
+            this.touchEndX = e.changedTouches[0].screenX;
+            this.touchEndY = e.changedTouches[0].screenY;
+            this.handleSwipe();
+        }, { passive: true });
+    }
+
+    handleSwipe() {
+        const deltaX = this.touchEndX - this.touchStartX;
+        const deltaY = this.touchEndY - this.touchStartY;
+        const minSwipeDistance = 50;
+
+        // Check if horizontal swipe is longer than vertical (to avoid conflicts with scrolling)
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+            if (deltaX > 0) {
+                // Swipe right - go to previous card
+                this.goToPreviousCard();
+            } else {
+                // Swipe left - go to next card
+                if (this.reviewMode) {
+                    // In review mode, just go to next card
+                    this.currentIndex++;
+                    this.showNextCard();
+                } else {
+                    // In normal mode, need to rate first
+                    if (document.getElementById('answerSection').style.display === 'block') {
+                        // Answer is shown, auto-rate as "Good" on swipe
+                        this.rateCard(3);
+                    }
+                }
+            }
+        }
+    }
+
+    goToPreviousCard() {
+        if (this.currentIndex > 0) {
+            this.currentIndex--;
+            this.showNextCard();
         }
     }
 
@@ -391,6 +463,14 @@ class SpacedRepetitionApp {
         // Update character display with individual character hover
         const charDisplay = document.getElementById('characterDisplay');
         charDisplay.innerHTML = ''; // Clear previous content
+        charDisplay.style.cursor = 'pointer';
+
+        // Add click handler to character display to show answer
+        charDisplay.onclick = () => {
+            if (document.getElementById('showAnswerBtn').style.display === 'block') {
+                this.showAnswer();
+            }
+        };
 
         // For words and sentences, create hoverable individual characters
         if (this.currentMode === 'words' || this.currentMode === 'sentences') {
@@ -413,7 +493,7 @@ class SpacedRepetitionApp {
         document.getElementById('answerSection').style.display = 'none';
         document.getElementById('showAnswerBtn').style.display = 'block';
 
-        // Track start time for statistics
+        // Track start time for automatic difficulty rating
         this.cardStartTime = Date.now();
 
         // Update progress bar
@@ -421,9 +501,22 @@ class SpacedRepetitionApp {
         document.getElementById('progressFill').style.width = `${progress}%`;
         document.getElementById('progressText').textContent =
             `${this.currentIndex} / ${this.sessionCards.length}`;
+
+        // In review mode, automatically show the answer
+        if (this.reviewMode) {
+            setTimeout(() => {
+                this.showAnswer();
+            }, 100);
+        }
     }
 
     showAnswer() {
+        // Clear any existing auto-advance timeout
+        if (this.autoAdvanceTimeout) {
+            clearTimeout(this.autoAdvanceTimeout);
+            this.autoAdvanceTimeout = null;
+        }
+
         document.getElementById('showAnswerBtn').style.display = 'none';
         document.getElementById('answerSection').style.display = 'block';
 
@@ -437,9 +530,55 @@ class SpacedRepetitionApp {
         } else {
             document.getElementById('example').style.display = 'none';
         }
+
+        // Calculate response time for automatic difficulty rating
+        const responseTime = this.cardStartTime ? (Date.now() - this.cardStartTime) / 1000 : 0;
+
+        if (this.reviewMode) {
+            // In review mode, hide rating buttons
+            document.querySelectorAll('.rating-btn').forEach(btn => {
+                btn.style.display = 'none';
+            });
+        } else {
+            // Show rating buttons
+            document.querySelectorAll('.rating-btn').forEach(btn => {
+                btn.style.display = '';
+                btn.classList.remove('auto-selected');
+            });
+
+            // Automatically rate based on response time
+            let rating;
+            let selectedBtn;
+            if (responseTime < 3) {
+                rating = 5; // Easy - fast response
+                selectedBtn = document.querySelector('[data-rating="5"]');
+            } else if (responseTime < 8) {
+                rating = 3; // Good - moderate response
+                selectedBtn = document.querySelector('[data-rating="3"]');
+            } else {
+                rating = 1; // Hard - slow response
+                selectedBtn = document.querySelector('[data-rating="1"]');
+            }
+
+            // Highlight the auto-selected button
+            if (selectedBtn) {
+                selectedBtn.classList.add('auto-selected');
+            }
+
+            // Show answer briefly, then auto-advance
+            this.autoAdvanceTimeout = setTimeout(() => {
+                this.rateCard(rating);
+            }, 2000); // Show answer for 2 seconds before advancing
+        }
     }
 
     rateCard(rating) {
+        // Clear auto-advance timeout if user manually clicked
+        if (this.autoAdvanceTimeout) {
+            clearTimeout(this.autoAdvanceTimeout);
+            this.autoAdvanceTimeout = null;
+        }
+
         // Calculate study time for this card
         const studyTime = this.cardStartTime ? (Date.now() - this.cardStartTime) / 1000 : 0;
 
