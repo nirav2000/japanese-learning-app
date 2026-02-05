@@ -5,6 +5,28 @@ All notable changes to the Language Learning App will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-02-05
+
+### Added
+- **Theme Switcher**: Dropdown selector to switch between Default and Paul Noble themes
+- **Integrated Paul Noble Theme**: Paul Noble theme now fully integrated in main app
+- **Theme Persistence**: Theme preference saved to localStorage and restored on reload
+- **Smooth Theme Switching**: Instant theme changes without page reload
+- **Theme Selector UI**: Clean dropdown interface matching app design
+
+### Changed
+- Paul Noble CSS now loaded with app (disabled by default)
+- Body class `paul-noble-theme` added/removed dynamically
+- Theme selection available next to Study Mode toggle
+
+### Technical
+- `applyTheme()` method for theme application
+- `switchTheme()` method for theme switching with persistence
+- Theme stored in `localStorage` as `appTheme`
+- Console logging for theme changes
+
+---
+
 ## [2.1.0] - 2026-02-05
 
 ### Added

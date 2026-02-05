@@ -2,27 +2,12 @@
 // Language Learning App Version Information
 
 const APP_VERSION = {
-    current: '2.2.0',
-    name: 'Theme Switcher Edition',
+    current: '2.1.0',
+    name: 'Versioning Edition',
     releaseDate: '2026-02-05',
 
     // Version history
     history: [
-        {
-            version: '2.2.0',
-            name: 'Theme Switcher Edition',
-            date: '2026-02-05',
-            type: 'minor',
-            highlights: [
-                'Added theme selector dropdown to switch between Default and Paul Noble themes',
-                'Paul Noble theme now integrated and switchable in main app',
-                'Theme preference saved to localStorage',
-                'Smooth theme switching without page reload',
-                'Visual feedback on theme selection'
-            ],
-            bugfixes: [],
-            breaking: []
-        },
         {
             version: '2.1.0',
             name: 'Versioning Edition',

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>Debug Test</h1>
+    <div id="output"></div>
+
+    <script src="japanese-data.js"></script>
+    <script src="french-data.js"></script>
+    <script src="gujarati-data.js"></script>
+    <script src="data.js"></script>
+
+    <script>
+        const output = document.getElementById('output');
+
+        // Test 1: Check if data is loaded
+        output.innerHTML += '<p>Test 1: japaneseData exists: ' + (typeof japaneseData !== 'undefined') + '</p>';
+        output.innerHTML += '<p>Test 2: frenchData exists: ' + (typeof frenchData !== 'undefined') + '</p>';
+        output.innerHTML += '<p>Test 3: gujaratiData exists: ' + (typeof gujaratiData !== 'undefined') + '</p>';
+        output.innerHTML += '<p>Test 4: languageData exists: ' + (typeof languageData !== 'undefined') + '</p>';
+        output.innerHTML += '<p>Test 5: languageConfig exists: ' + (typeof languageConfig !== 'undefined') + '</p>';
+
+        if (typeof languageConfig !== 'undefined') {
+            output.innerHTML += '<p>Test 6: languageConfig.japanese exists: ' + (typeof languageConfig.japanese !== 'undefined') + '</p>';
+            if (languageConfig.japanese) {
+                output.innerHTML += '<p>Test 7: languageConfig.japanese.modes: ' + JSON.stringify(languageConfig.japanese.modes) + '</p>';
+            }
+        }
+
+        if (typeof languageData !== 'undefined') {
+            output.innerHTML += '<p>Test 8: languageData.japanese exists: ' + (typeof languageData.japanese !== 'undefined') + '</p>';
+            if (languageData.japanese) {
+                output.innerHTML += '<p>Test 9: languageData.japanese.hiragana length: ' + (languageData.japanese.hiragana ? languageData.japanese.hiragana.length : 'N/A') + '</p>';
+            }
+        }
+    </script>
+</body>
+</html>
