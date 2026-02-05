@@ -1,0 +1,87 @@
+{
+  "bookName": "Unlocking Japanese with Paul Noble",
+  "chapters": [
+    {
+      "number": 1,
+      "title": "Getting Started",
+      "description": "Your first steps in Japanese",
+      "rules": [
+        "Rule Number 1: Don't skip anything!"
+      ],
+      "vocabulary": [
+        {
+          "char": "こんにちは",
+          "romaji": "konnichiwa",
+          "meaning": "hello",
+          "frequency": 1,
+          "example": "Basic greeting",
+          "category": "greeting"
+        }
+      ],
+      "sentences": [
+        {
+          "char": "こんにちは",
+          "romaji": "konnichiwa",
+          "meaning": "Hello",
+          "frequency": 1,
+          "example": "Most common greeting",
+          "buildingBlock": "This is your first building block"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Chapter Title Here",
+      "description": "What you'll learn in this chapter",
+      "rules": [],
+      "vocabulary": [],
+      "sentences": []
+    },
+    {
+      "number": 3,
+      "title": "I made a hotel reservation online last night - we're going to go to Kyoto!",
+      "description": "Making plans and talking about the future",
+      "rules": [],
+      "vocabulary": [
+        {
+          "char": "ホテル",
+          "romaji": "hoteru",
+          "meaning": "hotel",
+          "frequency": 1,
+          "example": "ホテルの予約 (hotel reservation)",
+          "category": "travel"
+        },
+        {
+          "char": "予約",
+          "romaji": "yoyaku",
+          "meaning": "reservation",
+          "frequency": 2,
+          "example": "予約する (to make a reservation)",
+          "category": "travel"
+        }
+      ],
+      "sentences": [
+        {
+          "char": "昨夜ホテルの予約をしました",
+          "romaji": "sakuya hoteru no yoyaku wo shimashita",
+          "meaning": "I made a hotel reservation last night",
+          "frequency": 1,
+          "example": "Past tense action",
+          "buildingBlock": "Building on what you learned before"
+        }
+      ]
+    }
+  ],
+  "instructions": {
+    "howToUse": "Fill in each chapter as you work through the Paul Noble book. Add vocabulary and sentences in the order they appear in the book.",
+    "fields": {
+      "char": "The Japanese characters",
+      "romaji": "How to pronounce it (romaji)",
+      "meaning": "English translation",
+      "frequency": "Order of introduction (1, 2, 3...)",
+      "example": "Additional context or example usage",
+      "category": "Type of word (greeting, travel, food, etc.)",
+      "buildingBlock": "Optional: How this builds on previous learning"
+    }
+  }
+}
