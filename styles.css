@@ -1218,3 +1218,151 @@ header h1 {
     margin-left: 5px;
     animation: pulse 2s ease-in-out infinite;
 }
+
+/* Version Switcher Styles */
+.version-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.version-switcher {
+    padding: 6px 12px;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    background: white;
+    color: #667eea;
+    font-weight: 600;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.version-switcher:hover {
+    background: #f0f0ff;
+    transform: translateY(-1px);
+}
+
+.version-switcher:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.version-history-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.version-history-btn:hover {
+    background: #764ba2;
+    transform: scale(1.05);
+}
+
+/* Version History Modal */
+.version-history-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.version-current-section {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.version-current-section h3 {
+    color: #667eea;
+    margin: 10px 0;
+    font-size: 1.3em;
+}
+
+.version-date {
+    color: #888;
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+.version-badge.current {
+    background: #27ae60;
+}
+
+.version-item {
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.version-item:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    transform: translateY(-2px);
+}
+
+.version-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.version-item-title {
+    font-weight: 600;
+    color: #667eea;
+    font-size: 1.1em;
+}
+
+.version-item-date {
+    color: #888;
+    font-size: 0.85em;
+}
+
+.version-item-description {
+    color: #555;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.version-item-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.version-item-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.archived-badge {
+    display: inline-block;
+    background: #95a5a6;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 8px;
+    font-size: 0.75em;
+    font-weight: 600;
+    margin-left: 8px;
+}

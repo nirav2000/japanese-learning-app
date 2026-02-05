@@ -2,12 +2,27 @@
 // Language Learning App Version Information
 
 const APP_VERSION = {
-    current: '2.2.0',
-    name: 'Theme Switcher Edition',
+    current: '2.3.0',
+    name: 'Version Switcher Edition',
     releaseDate: '2026-02-05',
 
     // Version history
     history: [
+        {
+            version: '2.3.0',
+            name: 'Version Switcher Edition',
+            date: '2026-02-05',
+            type: 'minor',
+            highlights: [
+                'Added version switcher dropdown in footer to quickly access archived versions',
+                'New version history modal showing all available versions',
+                'Direct links to load previous versions (v2.0.0, v2.1.0, v2.2.0)',
+                'Enhanced footer with version controls',
+                'Improved version navigation experience'
+            ],
+            bugfixes: [],
+            breaking: []
+        },
         {
             version: '2.2.0',
             name: 'Theme Switcher Edition',

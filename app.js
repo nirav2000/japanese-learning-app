@@ -176,6 +176,45 @@ class SpacedRepetitionApp {
                 this.hideWhatsNew();
             });
         }
+
+        // Version history button
+        const versionHistoryBtn = document.getElementById('versionHistoryBtn');
+        if (versionHistoryBtn) {
+            versionHistoryBtn.addEventListener('click', () => {
+                this.showVersionHistory();
+            });
+        }
+
+        // Version history modal close buttons
+        const closeVersionHistory = document.getElementById('closeVersionHistory');
+        const versionHistoryOkBtn = document.getElementById('versionHistoryOkBtn');
+        const versionHistoryOverlay = document.getElementById('versionHistoryOverlay');
+
+        if (closeVersionHistory) {
+            closeVersionHistory.addEventListener('click', () => {
+                this.hideVersionHistory();
+            });
+        }
+
+        if (versionHistoryOkBtn) {
+            versionHistoryOkBtn.addEventListener('click', () => {
+                this.hideVersionHistory();
+            });
+        }
+
+        if (versionHistoryOverlay) {
+            versionHistoryOverlay.addEventListener('click', () => {
+                this.hideVersionHistory();
+            });
+        }
+
+        // Version switcher dropdown
+        const versionSwitcher = document.getElementById('versionSwitcher');
+        if (versionSwitcher) {
+            versionSwitcher.addEventListener('change', (e) => {
+                this.handleVersionSwitch(e.target.value);
+            });
+        }
     }
 
     showWhatsNew() {
@@ -225,6 +264,78 @@ class SpacedRepetitionApp {
         const modal = document.getElementById('whatsNewModal');
         if (modal) {
             modal.style.display = 'none';
+        }
+    }
+
+    showVersionHistory() {
+        const modal = document.getElementById('versionHistoryModal');
+        const content = document.getElementById('versionHistoryContent');
+
+        if (!modal || !content) return;
+
+        // Populate version history
+        let html = '';
+
+        // Get all versions except current
+        const archivedVersions = APP_VERSION.history.slice(1); // Skip first (current) version
+
+        archivedVersions.forEach(version => {
+            html += `
+                <div class="version-item">
+                    <div class="version-item-header">
+                        <div class="version-item-title">
+                            v${version.version} - ${version.name}
+                            <span class="archived-badge">ARCHIVED</span>
+                        </div>
+                    </div>
+                    <div class="version-item-date">${version.date}</div>
+                    <div class="version-item-description">
+                        ${version.highlights && version.highlights.length > 0 ?
+                            `<strong>Features:</strong> ${version.highlights[0]}` :
+                            'Legacy version'}
+                    </div>
+                    <a href="versions/v${version.version}/index.html" class="version-item-link" target="_blank">
+                        🚀 Open v${version.version}
+                    </a>
+                </div>
+            `;
+        });
+
+        content.innerHTML = html;
+        modal.style.display = 'flex';
+    }
+
+    hideVersionHistory() {
+        const modal = document.getElementById('versionHistoryModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    handleVersionSwitch(value) {
+        if (value === 'current') {
+            // Already on current version, do nothing
+            return;
+        }
+
+        // Navigate to archived version
+        const targetUrl = `versions/v${value}/index.html`;
+
+        // Confirm navigation
+        if (confirm(`Switch to version ${value}? This will open the archived version in a new tab.`)) {
+            window.open(targetUrl, '_blank');
+
+            // Reset dropdown to current
+            const versionSwitcher = document.getElementById('versionSwitcher');
+            if (versionSwitcher) {
+                versionSwitcher.value = 'current';
+            }
+        } else {
+            // Reset dropdown to current if user cancels
+            const versionSwitcher = document.getElementById('versionSwitcher');
+            if (versionSwitcher) {
+                versionSwitcher.value = 'current';
+            }
         }
     }
 
