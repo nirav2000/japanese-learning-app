@@ -1,0 +1,352 @@
+/* Paul Noble Theme - Inspired by "Unlocking Japanese" book design */
+
+:root {
+    --pn-primary: #d95d4e;
+    --pn-primary-dark: #b84739;
+    --pn-cream: #f9f6f1;
+    --pn-white: #ffffff;
+    --pn-text: #2c2c2c;
+    --pn-text-light: #666666;
+    --pn-border: #e0d5c7;
+}
+
+body.paul-noble-theme {
+    background: var(--pn-cream);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header - Book Cover Style */
+.paul-noble-theme header {
+    background: var(--pn-primary);
+    background: linear-gradient(135deg, var(--pn-primary) 0%, var(--pn-primary-dark) 100%);
+    border-radius: 8px;
+    padding: 30px 20px;
+    box-shadow: 0 4px 15px rgba(217, 93, 78, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.paul-noble-theme header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,10 L90,90 L10,90 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+    background-size: contain;
+    opacity: 0.3;
+}
+
+.paul-noble-theme header h1 {
+    font-size: 2.2em;
+    font-weight: 700;
+    letter-spacing: -1px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Chapter Cards */
+.chapter-card {
+    background: var(--pn-white);
+    border: 3px solid var(--pn-primary);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.chapter-number {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    background: var(--pn-primary);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    box-shadow: 0 3px 8px rgba(217, 93, 78, 0.4);
+}
+
+.chapter-title {
+    margin-top: 20px;
+    font-size: 1.3em;
+    color: var(--pn-primary);
+    font-weight: 600;
+}
+
+/* Rule Boxes - "Don't skip anything!" style */
+.rule-box {
+    background: var(--pn-primary);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    position: relative;
+}
+
+.rule-box::before {
+    content: '📌';
+    font-size: 2em;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    opacity: 0.5;
+}
+
+.rule-number {
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-bottom: 5px;
+    opacity: 0.9;
+}
+
+.rule-text {
+    font-size: 1.4em;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* Step-by-Step Arrows */
+.step-indicator {
+    text-align: center;
+    margin: 15px 0;
+    position: relative;
+}
+
+.step-arrow {
+    display: inline-block;
+    color: var(--pn-primary);
+    font-size: 3em;
+    transform: rotate(90deg);
+}
+
+.step-text {
+    display: block;
+    color: var(--pn-text-light);
+    font-size: 0.9em;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* Mode Buttons - Book Chapter Style */
+.paul-noble-theme .mode-btn {
+    background: var(--pn-white);
+    border: 3px solid var(--pn-border);
+    color: var(--pn-text);
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.paul-noble-theme .mode-btn:hover {
+    border-color: var(--pn-primary);
+    background: var(--pn-cream);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(217, 93, 78, 0.2);
+}
+
+.paul-noble-theme .mode-btn.active {
+    background: var(--pn-primary);
+    color: white;
+    border-color: var(--pn-primary);
+    box-shadow: 0 4px 15px rgba(217, 93, 78, 0.4);
+}
+
+/* Language Buttons */
+.paul-noble-theme .language-btn {
+    background: var(--pn-white);
+    border: 2px solid var(--pn-border);
+    border-radius: 8px;
+}
+
+.paul-noble-theme .language-btn.active {
+    background: var(--pn-primary);
+    border-color: var(--pn-primary);
+}
+
+/* Learning Cards */
+.paul-noble-theme .card {
+    background: var(--pn-white);
+    border: 4px solid var(--pn-primary);
+    border-radius: 12px;
+    padding: 40px;
+}
+
+.paul-noble-theme .character-display {
+    color: var(--pn-primary);
+}
+
+/* Buttons */
+.paul-noble-theme .show-answer-btn {
+    background: var(--pn-primary);
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(217, 93, 78, 0.3);
+}
+
+.paul-noble-theme .show-answer-btn:hover {
+    background: var(--pn-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(217, 93, 78, 0.4);
+}
+
+/* Rating Buttons */
+.paul-noble-theme .rating-btn {
+    border-radius: 8px;
+    border: 2px solid transparent;
+}
+
+.paul-noble-theme .rating-btn.hard {
+    background: #e74c3c;
+    border-color: #c0392b;
+}
+
+.paul-noble-theme .rating-btn.good {
+    background: #f39c12;
+    border-color: #d68910;
+}
+
+.paul-noble-theme .rating-btn.easy {
+    background: #27ae60;
+    border-color: #229954;
+}
+
+/* Progress Bar */
+.paul-noble-theme .progress-fill {
+    background: linear-gradient(90deg, var(--pn-primary) 0%, var(--pn-primary-dark) 100%);
+}
+
+/* Quick Actions */
+.paul-noble-theme .quick-action-btn {
+    background: var(--pn-white);
+    border: 2px solid var(--pn-primary);
+    color: var(--pn-primary);
+    border-radius: 8px;
+}
+
+.paul-noble-theme .quick-action-btn:hover,
+.paul-noble-theme .quick-action-btn.active {
+    background: var(--pn-primary);
+    color: white;
+}
+
+/* Stats Panel */
+.paul-noble-theme .stat-value {
+    color: var(--pn-primary);
+}
+
+/* Welcome Screen */
+.paul-noble-theme .welcome-screen {
+    background: var(--pn-white);
+    border: 3px solid var(--pn-primary);
+    border-radius: 12px;
+    padding: 40px;
+}
+
+.paul-noble-theme .feature-item {
+    background: var(--pn-cream);
+    border-left: 4px solid var(--pn-primary);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Study Mode Checkbox */
+.paul-noble-theme .review-mode-checkbox {
+    accent-color: var(--pn-primary);
+}
+
+/* Reference Chart */
+.paul-noble-theme .reference-chart {
+    background: var(--pn-white);
+    border: 3px solid var(--pn-primary);
+}
+
+.paul-noble-theme .chart-cell {
+    background: var(--pn-cream);
+    border: 2px solid var(--pn-border);
+}
+
+.paul-noble-theme .chart-character {
+    color: var(--pn-primary);
+}
+
+/* Building Block Indicator */
+.building-block {
+    background: var(--pn-cream);
+    border-left: 4px solid var(--pn-primary);
+    padding: 15px;
+    margin: 15px 0;
+    font-style: italic;
+    color: var(--pn-text-light);
+}
+
+.building-block::before {
+    content: '🧱 ';
+    margin-right: 8px;
+}
+
+/* Chapter Navigation */
+.chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: var(--pn-white);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 2px solid var(--pn-border);
+}
+
+.chapter-nav-btn {
+    background: var(--pn-primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.chapter-nav-btn:hover {
+    background: var(--pn-primary-dark);
+    transform: scale(1.05);
+}
+
+.chapter-nav-btn:disabled {
+    background: var(--pn-border);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.chapter-info {
+    text-align: center;
+    font-weight: 600;
+    color: var(--pn-text);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .paul-noble-theme header h1 {
+        font-size: 1.6em;
+    }
+
+    .chapter-card {
+        padding: 20px;
+    }
+
+    .chapter-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2em;
+    }
+}
