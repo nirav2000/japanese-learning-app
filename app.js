@@ -1419,7 +1419,20 @@ class SpacedRepetitionApp {
     applyTheme(theme) {
         const body = document.body;
         const paulNobleThemeLink = document.getElementById('paulNobleTheme');
+        const premiumThemeLink = document.getElementById('premiumTheme');
 
+        // Remove all theme classes
+        body.classList.remove('paul-noble-theme', 'premium-theme');
+
+        // Disable all theme stylesheets
+        if (paulNobleThemeLink) {
+            paulNobleThemeLink.disabled = true;
+        }
+        if (premiumThemeLink) {
+            premiumThemeLink.disabled = true;
+        }
+
+        // Apply selected theme
         if (theme === 'paul-noble') {
             // Enable Paul Noble theme
             body.classList.add('paul-noble-theme');
@@ -1427,12 +1440,15 @@ class SpacedRepetitionApp {
                 paulNobleThemeLink.disabled = false;
             }
             console.log('🎨 Paul Noble theme enabled');
+        } else if (theme === 'premium') {
+            // Enable Premium theme
+            body.classList.add('premium-theme');
+            if (premiumThemeLink) {
+                premiumThemeLink.disabled = false;
+            }
+            console.log('🎨 Premium theme enabled');
         } else {
             // Use default theme
-            body.classList.remove('paul-noble-theme');
-            if (paulNobleThemeLink) {
-                paulNobleThemeLink.disabled = true;
-            }
             console.log('🎨 Default theme enabled');
         }
 
